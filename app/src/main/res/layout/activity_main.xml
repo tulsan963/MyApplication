@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btnConnect"
+        android:layout_width="406dp"
+        android:layout_height="147dp"
+        android:text="connect"
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="-2dp" />
+
+    <Button
+        android:id="@+id/btnSend"
+        android:layout_width="136dp"
+        android:layout_height="373dp"
+        android:text="Send"
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="-1dp" />
+
+</android.support.constraint.ConstraintLayout>
