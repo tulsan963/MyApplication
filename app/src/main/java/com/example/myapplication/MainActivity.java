@@ -21,7 +21,7 @@ import app.akexorcist.bluetotohspp.library.BluetoothState;
 import app.akexorcist.bluetotohspp.library.DeviceList;
 
 public class MainActivity extends AppCompatActivity  {
-    float GX;
+    float GX,GY,GZ;
     BluetoothSPP bt ;
     TextView textX, textY, textZ;
     SensorManager sensorManager;
@@ -87,7 +87,9 @@ public class MainActivity extends AppCompatActivity  {
             float x = event.values[0];
             GX=(int)x;
             float y = event.values[1];
+            GY=(int)y;
             float z = event.values[2];
+            GZ=(int)z;
 
             textX.setText("X : " + (int)x);
             textY.setText("Y : " + (int)y);
@@ -124,12 +126,22 @@ public class MainActivity extends AppCompatActivity  {
 
     public void setup() {
         Button btnSend = (Button) findViewById(R.id.btnSend);
+        Button btnSwitch = (Button) findViewById(R.id.btnSwitch);
         btnSend.setOnClickListener(new OnClickListener(){
             public void onClick(View v){
-                bt.send("X : "+GX, true);
+                bt.send("SHOOT", true);
 
             }
         });
+
+        btnSwitch.setOnClickListener(new OnClickListener(){
+            public void onClick(View v){
+                bt.send("SWITCH", true);
+
+            }
+        });
+
+
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
