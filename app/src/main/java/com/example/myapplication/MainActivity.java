@@ -1,6 +1,11 @@
 package com.example.myapplication;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +13,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import app.akexorcist.bluetotohspp.library.BluetoothSPP;
@@ -15,13 +21,21 @@ import app.akexorcist.bluetotohspp.library.BluetoothState;
 import app.akexorcist.bluetotohspp.library.DeviceList;
 
 public class MainActivity extends AppCompatActivity  {
-
+    float GX;
     BluetoothSPP bt ;
-
+    TextView textX, textY, textZ;
+    SensorManager sensorManager;
+    Sensor sensor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        textX = (TextView) findViewById(R.id.textX);
+        textY = (TextView) findViewById(R.id.textY);
+        textZ = (TextView) findViewById(R.id.textZ);
         bt = new BluetoothSPP(this);
 
         if(!bt.isBluetoothAvailable()) {
@@ -66,9 +80,32 @@ public class MainActivity extends AppCompatActivity  {
         });
 
     }
+    SensorEventListener accelListener = new SensorEventListener() {
+        public void onAccuracyChanged(Sensor sensor, int acc) { }
+
+        public void onSensorChanged(SensorEvent event) {
+            float x = event.values[0];
+            GX=(int)x;
+            float y = event.values[1];
+            float z = event.values[2];
+
+            textX.setText("X : " + (int)x);
+            textY.setText("Y : " + (int)y);
+            textZ.setText("Z : " + (int)z);
+        }
+    };
     public void onDestroy() {
         super.onDestroy();
         bt.stopService();
+    }
+    public void onResume() {
+        super.onResume();
+        sensorManager.registerListener(accelListener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    public void onStop() {
+        super.onStop();
+        sensorManager.unregisterListener(accelListener);
     }
 
     public void onStart() {
@@ -89,7 +126,8 @@ public class MainActivity extends AppCompatActivity  {
         Button btnSend = (Button) findViewById(R.id.btnSend);
         btnSend.setOnClickListener(new OnClickListener(){
             public void onClick(View v){
-                bt.send("Text", true);
+                bt.send("X : "+GX, true);
+
             }
         });
     }
