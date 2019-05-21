@@ -94,6 +94,20 @@ public class MainActivity extends AppCompatActivity  {
             textX.setText("X : " + (int)x);
             textY.setText("Y : " + (int)y);
             textZ.setText("Z : " + (int)z);
+            if(GY<-2){
+                bt.send("Forward", true);
+            }
+            if(GY>2){
+                bt.send("Backward", true);
+            }
+            if(GZ<8){
+                bt.send("Left", true);
+
+            }
+            if(GZ>10){
+                bt.send("Right", true);
+
+            }
         }
     };
     public void onDestroy() {
@@ -120,6 +134,7 @@ public class MainActivity extends AppCompatActivity  {
                 bt.setupService();
                 bt.startService(BluetoothState.DEVICE_ANDROID);
                 setup();
+
             }
         }
     }
@@ -140,7 +155,6 @@ public class MainActivity extends AppCompatActivity  {
 
             }
         });
-
 
     }
 
