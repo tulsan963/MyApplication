@@ -78,5 +78,16 @@
         app:layout_constraintTop_toBottomOf="@+id/textZ"
         tools:ignore="MissingConstraints" />
 
+    <TextView
+        android:id="@+id/textReceive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginLeft="176dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textY" />
+
 
 </android.support.constraint.ConstraintLayout>

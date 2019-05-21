@@ -8,6 +8,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.app.Activity;
 import android.content.Intent;
@@ -23,7 +24,7 @@ import app.akexorcist.bluetotohspp.library.DeviceList;
 public class MainActivity extends AppCompatActivity  {
     float GX,GY,GZ;
     BluetoothSPP bt ;
-    TextView textX, textY, textZ;
+    TextView textX, textY, textZ,textReceive;
     SensorManager sensorManager;
     Sensor sensor;
     @Override
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity  {
         textX = (TextView) findViewById(R.id.textX);
         textY = (TextView) findViewById(R.id.textY);
         textZ = (TextView) findViewById(R.id.textZ);
+        textReceive = (TextView) findViewById(R.id.textReceive);
         bt = new BluetoothSPP(this);
 
         if(!bt.isBluetoothAvailable()) {
@@ -108,6 +110,12 @@ public class MainActivity extends AppCompatActivity  {
                 bt.send("Right", true);
 
             }
+            bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() {
+                public void onDataReceived(byte[] data, String message) {
+                    //og.i("Check", "Message : " + message);
+                    textReceive.setText(message);
+                }
+            });
         }
     };
     public void onDestroy() {
