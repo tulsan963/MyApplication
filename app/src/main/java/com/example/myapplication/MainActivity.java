@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.app.Instrumentation;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -9,6 +10,7 @@ import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.app.Activity;
 import android.content.Intent;
@@ -114,6 +116,16 @@ public class MainActivity extends AppCompatActivity  {
                 public void onDataReceived(byte[] data, String message) {
                     //og.i("Check", "Message : " + message);
                     textReceive.setText(message);
+                    //startService(new Intent(MainActivity.this, EDMTKeyboard.class));
+                    /*Instrumentation m_Instrumentation = new Instrumentation();
+                    m_Instrumentation.sendKeyDownUpSync( KeyEvent.KEYCODE_BACK );*/
+                    /*
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+                    sendIntent.setType("text/plain");
+                    startActivity(sendIntent);*/
+
                 }
             });
         }

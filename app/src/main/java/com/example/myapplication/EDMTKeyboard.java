@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
@@ -7,6 +8,9 @@ import android.media.AudioManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputConnection;
+import android.widget.Toast;
+
+import static android.view.KeyEvent.*;
 
 public class EDMTKeyboard extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
 
@@ -18,6 +22,23 @@ public class EDMTKeyboard extends InputMethodService implements KeyboardView.OnK
 
     //Press Ctrl+O
 
+    public void onBindInput (){
+
+        InputConnection ic = getCurrentInputConnection();
+        /*ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
+        ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
+        ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
+        ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
+        ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
+        ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));*/
+        /*char code = (char)49;
+        if(Character.isLetter(code) && isCaps)
+            code = Character.toUpperCase(code);
+        ic.commitText(String.valueOf(code),1);
+        ic.sendKeyEvent(new KeyEvent(KEYCODE_ENTER,KEYCODE_ENTER));*/
+
+    }
+
 
     @Override
     public View onCreateInputView() {
@@ -25,6 +46,9 @@ public class EDMTKeyboard extends InputMethodService implements KeyboardView.OnK
         keyboard = new Keyboard(this,R.xml.qwert);
         kv.setKeyboard(keyboard);
         kv.setOnKeyboardActionListener(this);
+
+
+
         return kv;
     }
 
