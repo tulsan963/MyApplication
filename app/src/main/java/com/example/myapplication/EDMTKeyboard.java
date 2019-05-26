@@ -22,25 +22,24 @@ public class EDMTKeyboard extends InputMethodService implements KeyboardView.OnK
 
     private  boolean isCaps = false;
     private Intent intent;
-
-
-    //Press Ctrl+O
-
-    public void onBindInput (){
-        Toast.makeText(this, "Service Started onBindInput", Toast.LENGTH_LONG).show();
-        InputConnection ic = getCurrentInputConnection();
-        ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
-        ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
-
-
-
-    }
-
+    public InputConnection myconnection;
 
     @Override
     public void onStart(Intent intent, int startid) {
         String Receive = intent.getStringExtra("Command");
-        Toast.makeText(this, "Service Started EDMTKeyboard"+Receive, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Service Started "+Receive, Toast.LENGTH_LONG).show();
+        InputConnection ic = myconnection;
+        //if(ic!=null){
+            ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
+            ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
+
+        //}
+
+
+    }
+    public void onBindInput (){
+        Toast.makeText(this, "Service Started onBindInput", Toast.LENGTH_LONG).show();
+        myconnection =getCurrentInputConnection();
 
 
     }
@@ -50,15 +49,16 @@ public class EDMTKeyboard extends InputMethodService implements KeyboardView.OnK
         keyboard = new Keyboard(this,R.xml.qwert);
         kv.setKeyboard(keyboard);
         kv.setOnKeyboardActionListener(this);
-
+        //Toast.makeText(this, "Service Started onCreateInputView", Toast.LENGTH_LONG).show();
 
 
         return kv;
     }
 
+
     @Override
     public void onPress(int i) {
-
+        //Toast.makeText(this, "Service Started onPress", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -70,6 +70,7 @@ public class EDMTKeyboard extends InputMethodService implements KeyboardView.OnK
     public void onKey(int i, int[] ints) {
 
         InputConnection ic = getCurrentInputConnection();
+        myconnection=ic;
         playClick(i);
         switch (i)
         {

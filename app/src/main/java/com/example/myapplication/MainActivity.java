@@ -16,6 +16,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity   {
     TextView textX, textY, textZ,textReceive;
     SensorManager sensorManager;
     Sensor sensor;
+    EDMTKeyboard edmt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,17 +101,17 @@ public class MainActivity extends AppCompatActivity   {
             textY.setText("Y : " + (int)y);
             textZ.setText("Z : " + (int)z);
             if(GY<-2){
-                bt.send("Forward", true);
+                //bt.send("Forward", true);
             }
             if(GY>2){
-                bt.send("Backward", true);
+                //bt.send("Backward", true);
             }
             if(GZ<8){
-                bt.send("Left", true);
+                //bt.send("Left", true);
 
             }
             if(GZ>10){
-                bt.send("Right", true);
+                //bt.send("Right", true);
 
             }
             bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() {
@@ -117,10 +119,18 @@ public class MainActivity extends AppCompatActivity   {
                     //og.i("Check", "Message : " + message);
                     textReceive.setText(message);
                     Intent serviceIntent = new Intent(MainActivity.this, EDMTKeyboard.class);
-                    serviceIntent.putExtra("Command", "Test Command");
+                    serviceIntent.putExtra("Command", message);
                     startService(serviceIntent);
+
+
+                    //RelativeLayout layout = (RelativeLayout)findViewById(R.id.layout1);
+                    /*layout.setOnClickListener(new OnClickListener() {
+                        public void onClick(View v) {
+                            Log.i("Check", "On Click");
+                        }
+                    });*/
                     //startService(new Intent(MainActivity.this, EDMTKeyboard.class));
-                    //startService(new Intent(MainActivity.this, ControlService.class));
+                    //startService(new Intent(MainActivity.this, MyService.class));
 
                     /*Instrumentation m_Instrumentation = new Instrumentation();
                     m_Instrumentation.sendKeyDownUpSync( KeyEvent.KEYCODE_BACK );*/
