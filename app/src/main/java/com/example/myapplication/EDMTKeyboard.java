@@ -1,12 +1,15 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.media.AudioManager;
+import android.os.IBinder;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.widget.Toast;
 
@@ -18,28 +21,29 @@ public class EDMTKeyboard extends InputMethodService implements KeyboardView.OnK
     private Keyboard keyboard;
 
     private  boolean isCaps = false;
+    private Intent intent;
 
 
     //Press Ctrl+O
 
     public void onBindInput (){
-
+        Toast.makeText(this, "Service Started onBindInput", Toast.LENGTH_LONG).show();
         InputConnection ic = getCurrentInputConnection();
-        /*ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
-        ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
         ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
         ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
-        ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
-        ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));*/
-        /*char code = (char)49;
-        if(Character.isLetter(code) && isCaps)
-            code = Character.toUpperCase(code);
-        ic.commitText(String.valueOf(code),1);
-        ic.sendKeyEvent(new KeyEvent(KEYCODE_ENTER,KEYCODE_ENTER));*/
+
+
 
     }
 
 
+    @Override
+    public void onStart(Intent intent, int startid) {
+        String Receive = intent.getStringExtra("Command");
+        Toast.makeText(this, "Service Started EDMTKeyboard"+Receive, Toast.LENGTH_LONG).show();
+
+
+    }
     @Override
     public View onCreateInputView() {
         kv = (KeyboardView)getLayoutInflater().inflate(R.layout.keyboard,null);

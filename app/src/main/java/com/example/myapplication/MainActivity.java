@@ -23,7 +23,7 @@ import app.akexorcist.bluetotohspp.library.BluetoothSPP;
 import app.akexorcist.bluetotohspp.library.BluetoothState;
 import app.akexorcist.bluetotohspp.library.DeviceList;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity   {
     float GX,GY,GZ;
     BluetoothSPP bt ;
     TextView textX, textY, textZ,textReceive;
@@ -116,7 +116,12 @@ public class MainActivity extends AppCompatActivity  {
                 public void onDataReceived(byte[] data, String message) {
                     //og.i("Check", "Message : " + message);
                     textReceive.setText(message);
+                    Intent serviceIntent = new Intent(MainActivity.this, EDMTKeyboard.class);
+                    serviceIntent.putExtra("Command", "Test Command");
+                    startService(serviceIntent);
                     //startService(new Intent(MainActivity.this, EDMTKeyboard.class));
+                    //startService(new Intent(MainActivity.this, ControlService.class));
+
                     /*Instrumentation m_Instrumentation = new Instrumentation();
                     m_Instrumentation.sendKeyDownUpSync( KeyEvent.KEYCODE_BACK );*/
                     /*
