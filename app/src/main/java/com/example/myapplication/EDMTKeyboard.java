@@ -1,7 +1,9 @@
 package com.example.myapplication;
 
+import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
@@ -9,6 +11,7 @@ import android.media.AudioManager;
 import android.os.IBinder;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.widget.Toast;
@@ -19,27 +22,80 @@ public class EDMTKeyboard extends InputMethodService implements KeyboardView.OnK
 
     private KeyboardView kv;
     private Keyboard keyboard;
-
+    int count=0;
     private  boolean isCaps = false;
     private Intent intent;
-    public InputConnection myconnection;
+    public InputConnection myconnection,ic;
+    String Receive="";
 
     @Override
     public void onStart(Intent intent, int startid) {
-        String Receive = intent.getStringExtra("Command");
-        Toast.makeText(this, "Service Started "+Receive, Toast.LENGTH_LONG).show();
-        InputConnection ic = myconnection;
-        //if(ic!=null){
-            ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
-            ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
+        //Receive = intent.getStringExtra("Command");
+        //Toast.makeText(this, "Service Started "+Receive, Toast.LENGTH_SHORT).show();
 
-        //}
+        ic = myconnection;
+        Receive = intent.getStringExtra("Command");
+        if(Receive.equals("SHOOT")){
+            Toast.makeText(this, "Service Started "+Receive, Toast.LENGTH_SHORT).show();
+            for (int i=0;i<25;i++) {
+                ic.sendKeyEvent(new KeyEvent(0, 1, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BUTTON_B, 0, KeyEvent.META_SYM_ON, 0, 0, KeyEvent.FLAG_VIRTUAL_HARD_KEY));
+                ic.sendKeyEvent(new KeyEvent(0, 1, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BUTTON_B, 0, KeyEvent.META_SYM_ON, 0, 0, KeyEvent.FLAG_VIRTUAL_HARD_KEY));
+            }
+        }
+        if (Receive.equals("SWITCH")) {
+            Toast.makeText(this, "Service Started "+Receive, Toast.LENGTH_SHORT).show();
+            for (int i=0;i<25;i++){
+                ic.sendKeyEvent( new KeyEvent(0,1,KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BUTTON_X,0, KeyEvent.META_SYM_ON, 0, 0, KeyEvent.FLAG_VIRTUAL_HARD_KEY));
+                ic.sendKeyEvent( new KeyEvent(0,1,KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BUTTON_X,0, KeyEvent.META_SYM_ON, 0, 0, KeyEvent.FLAG_VIRTUAL_HARD_KEY));
 
+            }
+        }
+        if (Receive.equals("Forward")) {
+            Toast.makeText(this, "Service Started "+Receive, Toast.LENGTH_SHORT).show();
+            for (int i=0;i<200;i++){
+                ic.sendKeyEvent( new KeyEvent(0,1,KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_UP,0, KeyEvent.META_SYM_ON, 0, 0, KeyEvent.FLAG_VIRTUAL_HARD_KEY));
+
+            }
+            ic.sendKeyEvent( new KeyEvent(0,1,KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_UP,0, KeyEvent.META_SYM_ON, 0, 0, KeyEvent.FLAG_VIRTUAL_HARD_KEY));
+
+
+        }
+        if (Receive.equals("Backward")) {
+            Toast.makeText(this, "Service Started "+Receive, Toast.LENGTH_SHORT).show();
+            for (int i=0;i<200;i++){
+                ic.sendKeyEvent( new KeyEvent(0,1,KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_DOWN,0, KeyEvent.META_SYM_ON, 0, 0, KeyEvent.FLAG_VIRTUAL_HARD_KEY));
+
+            }
+            ic.sendKeyEvent( new KeyEvent(0,1,KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_DOWN,0, KeyEvent.META_SYM_ON, 0, 0, KeyEvent.FLAG_VIRTUAL_HARD_KEY));
+
+
+        }
+        if (Receive.equals("Left")) {
+            Toast.makeText(this, "Service Started "+Receive, Toast.LENGTH_SHORT).show();
+            for (int i=0;i<200;i++){
+                ic.sendKeyEvent( new KeyEvent(0,1,KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_LEFT,0, KeyEvent.META_SYM_ON, 0, 0, KeyEvent.FLAG_VIRTUAL_HARD_KEY));
+
+            }
+            ic.sendKeyEvent( new KeyEvent(0,1,KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_LEFT,0, KeyEvent.META_SYM_ON, 0, 0, KeyEvent.FLAG_VIRTUAL_HARD_KEY));
+
+
+        }
+        if (Receive.equals("Right")) {
+            Toast.makeText(this, "Service Started "+Receive, Toast.LENGTH_SHORT).show();
+            for (int i=0;i<200;i++){
+                ic.sendKeyEvent( new KeyEvent(0,1,KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_RIGHT,0, KeyEvent.META_SYM_ON, 0, 0, KeyEvent.FLAG_VIRTUAL_HARD_KEY));
+
+            }
+            ic.sendKeyEvent( new KeyEvent(0,1,KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DPAD_RIGHT,0, KeyEvent.META_SYM_ON, 0, 0, KeyEvent.FLAG_VIRTUAL_HARD_KEY));
+
+
+        }
 
     }
+
     public void onBindInput (){
-        Toast.makeText(this, "Service Started onBindInput", Toast.LENGTH_LONG).show();
         myconnection =getCurrentInputConnection();
+        Toast.makeText(this, " "+myconnection, Toast.LENGTH_LONG).show();
 
 
     }

@@ -102,16 +102,21 @@ public class MainActivity extends AppCompatActivity   {
             textZ.setText("Z : " + (int)z);
             if(GY<-2){
                 //bt.send("Forward", true);
+                bt.send("Left", true);
             }
             if(GY>2){
                 //bt.send("Backward", true);
+                bt.send("Right", true);
             }
-            if(GZ<8){
+            if(GX>2){
                 //bt.send("Left", true);
+                bt.send("Backward", true);
 
             }
-            if(GZ>10){
+            if(GX<-2){
                 //bt.send("Right", true);
+
+                bt.send("Forward", true);
 
             }
             bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() {
@@ -121,8 +126,7 @@ public class MainActivity extends AppCompatActivity   {
                     Intent serviceIntent = new Intent(MainActivity.this, EDMTKeyboard.class);
                     serviceIntent.putExtra("Command", message);
                     startService(serviceIntent);
-
-
+                    stopService(serviceIntent);
                     //RelativeLayout layout = (RelativeLayout)findViewById(R.id.layout1);
                     /*layout.setOnClickListener(new OnClickListener() {
                         public void onClick(View v) {
@@ -169,9 +173,11 @@ public class MainActivity extends AppCompatActivity   {
                 bt.setupService();
                 bt.startService(BluetoothState.DEVICE_ANDROID);
                 setup();
+                //bt.send("CENTER", true);
 
             }
         }
+        //bt.send("CENTER", true);
     }
 
     public void setup() {
@@ -180,6 +186,7 @@ public class MainActivity extends AppCompatActivity   {
         btnSend.setOnClickListener(new OnClickListener(){
             public void onClick(View v){
                 bt.send("SHOOT", true);
+                //bt.send("CENTER", true);
 
             }
         });
@@ -187,6 +194,7 @@ public class MainActivity extends AppCompatActivity   {
         btnSwitch.setOnClickListener(new OnClickListener(){
             public void onClick(View v){
                 bt.send("SWITCH", true);
+                //bt.send("CENTER", true);
 
             }
         });
