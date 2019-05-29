@@ -50,11 +50,7 @@ public class MainActivity extends AppCompatActivity   {
             finish();
         }
 
-        bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() {
-            public void onDataReceived(byte[] data, String message) {
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
         bt.setBluetoothConnectionListener(new BluetoothSPP.BluetoothConnectionListener() {
             public void onDeviceConnected(String name, String address) {
@@ -84,7 +80,15 @@ public class MainActivity extends AppCompatActivity   {
                 }
             }
         });
-
+        bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() {
+            public void onDataReceived(byte[] data, String message) {
+                textReceive.setText(message);
+                Intent serviceIntent = new Intent(MainActivity.this, EDMTKeyboard.class);
+                serviceIntent.putExtra("Command", message);
+                startService(serviceIntent);
+                stopService(serviceIntent);
+            }
+        });
     }
     SensorEventListener accelListener = new SensorEventListener() {
         public void onAccuracyChanged(Sensor sensor, int acc) { }
@@ -96,59 +100,25 @@ public class MainActivity extends AppCompatActivity   {
             GY=(int)y;
             float z = event.values[2];
             GZ=(int)z;
-
             textX.setText("X : " + (int)x);
             textY.setText("Y : " + (int)y);
             textZ.setText("Z : " + (int)z);
             if(GY<-2){
-                //bt.send("Forward", true);
                 bt.send("Left", true);
             }
             if(GY>2){
-                //bt.send("Backward", true);
                 bt.send("Right", true);
             }
             if(GX>2){
-                //bt.send("Left", true);
                 bt.send("Backward", true);
-
             }
             if(GX<-2){
-                //bt.send("Right", true);
-
                 bt.send("Forward", true);
-
             }
-            bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() {
-                public void onDataReceived(byte[] data, String message) {
-                    //og.i("Check", "Message : " + message);
-                    textReceive.setText(message);
-                    Intent serviceIntent = new Intent(MainActivity.this, EDMTKeyboard.class);
-                    serviceIntent.putExtra("Command", message);
-                    startService(serviceIntent);
-                    stopService(serviceIntent);
-                    //RelativeLayout layout = (RelativeLayout)findViewById(R.id.layout1);
-                    /*layout.setOnClickListener(new OnClickListener() {
-                        public void onClick(View v) {
-                            Log.i("Check", "On Click");
-                        }
-                    });*/
-                    //startService(new Intent(MainActivity.this, EDMTKeyboard.class));
-                    //startService(new Intent(MainActivity.this, MyService.class));
 
-                    /*Instrumentation m_Instrumentation = new Instrumentation();
-                    m_Instrumentation.sendKeyDownUpSync( KeyEvent.KEYCODE_BACK );*/
-                    /*
-                    Intent sendIntent = new Intent();
-                    sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-                    sendIntent.setType("text/plain");
-                    startActivity(sendIntent);*/
-
-                }
-            });
         }
     };
+
     public void onDestroy() {
         super.onDestroy();
         bt.stopService();
@@ -173,11 +143,8 @@ public class MainActivity extends AppCompatActivity   {
                 bt.setupService();
                 bt.startService(BluetoothState.DEVICE_ANDROID);
                 setup();
-                //bt.send("CENTER", true);
-
             }
         }
-        //bt.send("CENTER", true);
     }
 
     public void setup() {
@@ -186,16 +153,12 @@ public class MainActivity extends AppCompatActivity   {
         btnSend.setOnClickListener(new OnClickListener(){
             public void onClick(View v){
                 bt.send("SHOOT", true);
-                //bt.send("CENTER", true);
-
             }
         });
 
         btnSwitch.setOnClickListener(new OnClickListener(){
             public void onClick(View v){
                 bt.send("SWITCH", true);
-                //bt.send("CENTER", true);
-
             }
         });
 

@@ -52,7 +52,7 @@ public class EDMTKeyboard extends InputMethodService implements KeyboardView.OnK
         }
         if (Receive.equals("Forward")) {
             Toast.makeText(this, "Service Started "+Receive, Toast.LENGTH_SHORT).show();
-            for (int i=0;i<200;i++){
+            for (int i=0;i<300;i++){
                 ic.sendKeyEvent( new KeyEvent(0,1,KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_UP,0, KeyEvent.META_SYM_ON, 0, 0, KeyEvent.FLAG_VIRTUAL_HARD_KEY));
 
             }
@@ -62,7 +62,7 @@ public class EDMTKeyboard extends InputMethodService implements KeyboardView.OnK
         }
         if (Receive.equals("Backward")) {
             Toast.makeText(this, "Service Started "+Receive, Toast.LENGTH_SHORT).show();
-            for (int i=0;i<200;i++){
+            for (int i=0;i<300;i++){
                 ic.sendKeyEvent( new KeyEvent(0,1,KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_DOWN,0, KeyEvent.META_SYM_ON, 0, 0, KeyEvent.FLAG_VIRTUAL_HARD_KEY));
 
             }
@@ -72,7 +72,7 @@ public class EDMTKeyboard extends InputMethodService implements KeyboardView.OnK
         }
         if (Receive.equals("Left")) {
             Toast.makeText(this, "Service Started "+Receive, Toast.LENGTH_SHORT).show();
-            for (int i=0;i<200;i++){
+            for (int i=0;i<300;i++){
                 ic.sendKeyEvent( new KeyEvent(0,1,KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_LEFT,0, KeyEvent.META_SYM_ON, 0, 0, KeyEvent.FLAG_VIRTUAL_HARD_KEY));
 
             }
@@ -82,7 +82,7 @@ public class EDMTKeyboard extends InputMethodService implements KeyboardView.OnK
         }
         if (Receive.equals("Right")) {
             Toast.makeText(this, "Service Started "+Receive, Toast.LENGTH_SHORT).show();
-            for (int i=0;i<200;i++){
+            for (int i=0;i<300;i++){
                 ic.sendKeyEvent( new KeyEvent(0,1,KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DPAD_RIGHT,0, KeyEvent.META_SYM_ON, 0, 0, KeyEvent.FLAG_VIRTUAL_HARD_KEY));
 
             }
